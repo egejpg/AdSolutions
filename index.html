@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdCreative - Profesyonel Reklamcılık Ajansı</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script>function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const startTime = performance.now();
+
+            function updateCounter(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+
+                // Easing function (ease-out)
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                const current = Math.floor(easeOut * target);
+
+                if (target >= 1000) {
+                    element.textContent = current.toLocaleString('tr-TR') + '+';
+                } else {
+                    element.textContent = current + '+';
+                }
+
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                }
+            }
+
+            requestAnimationFrame(updateCounter);
+        }
+
+        // Intersection Observer ile görünürlük kontrolü
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target.querySelector('.counter');
+                    if (counter && !counter.classList.contains('counted')) {
+                        counter.classList.add('counted');
+                        const target = parseInt(counter.dataset.target);
+                        setTimeout(() => {
+                            animateCounter(counter, target);
+                        }, 200);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Sayfa yüklendiğinde observer'ı başlat
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.bg-white\\/10');
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+    <script>function toggleFAQ(element) {
+            const faqItem = element.closest('.faq-item');
+            const answer = faqItem.querySelector('.faq-answer');
+            const icon = faqItem.querySelector('.faq-icon');
+
+            // Diğer açık FAQ'ları kapat
+            const allFAQs = document.querySelectorAll('.faq-item');
+            allFAQs.forEach(item => {
+                if (item !== faqItem) {
+                    const otherAnswer = item.querySelector('.faq-answer');
+                    const otherIcon = item.querySelector('.faq-icon');
+                    otherAnswer.style.maxHeight = '0';
+                    otherIcon.style.transform = 'rotate(0deg)';
+                    item.classList.remove('ring-2', 'ring-indigo-500');
+                }
+            });
+
+            // Mevcut FAQ'ı aç/kapat
+            if (answer.style.maxHeight === '0px' || answer.style.maxHeight === '') {
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+                icon.style.transform = 'rotate(180deg)';
+                faqItem.classList.add('ring-2', 'ring-indigo-500');
+            } else {
+                answer.style.maxHeight = '0';
+                icon.style.transform = 'rotate(0deg)';
+                faqItem.classList.remove('ring-2', 'ring-indigo-500');
+            }
+        }
+
+        // Sayfa yüklendiğinde tüm FAQ'ların kapalı olduğundan emin ol
+        document.addEventListener('DOMContentLoaded', function () {
+            const answers = document.querySelectorAll('.faq-answer');
+            answers.forEach(answer => {
+                answer.style.maxHeight = '0';
+            });
+        });</script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .team-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .team-card img {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 1000px;
+            padding: 1rem;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            padding: 0 1rem;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md fixed w-full z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <svg class="h-10 w-10 text-indigo-600" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5-9h10v2H7z" />
+                </svg>
+                <span class="ml-2 text-xl font-bold text-gray-800">AdCreative</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#anasayfa" class="text-gray-700 hover:text-sky-800 transition">Ana Sayfa</a>
+                <a href="#hizmetler" class="text-gray-700 hover:text-sky-800 transition">Hizmetler</a>
+                <a href="#fiyatlandirma" class="text-gray-700 hover:text-sky-800 transition">Fiyatlandırma</a>
+                <a href="#ekibimiz" class="text-gray-700 hover:text-sky-800 transition">Ekibimiz</a>
+                <a href="#sss" class="text-gray-700 hover:text-sky-800 transition">SSS</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-700 focus:outline-none">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white pb-4 px-4">
+            <a href="#anasayfa" class="block py-2 text-gray-700 hover:text-sky-800">Ana Sayfa</a>
+            <a href="#hizmetler" class="block py-2 text-gray-700 hover:text-sky-800">Hizmetler</a>
+            <a href="#fiyatlandirma" class="block py-2 text-gray-700 hover:text-sky-800">Fiyatlandırma</a>
+            <a href="#ekibimiz" class="block py-2 text-gray-700 hover:text-sky-800">Ekibimiz</a>
+            <a href="#sss" class="block py-2 text-gray-700 hover:text-sky-800">SSS</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="anasayfa" class="pt-24 pb-16 bg-gradient-to-bl from-gray-300 via-[#0b4b93] to-[#0083f5]">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 text-white mb-10 md:mb-0">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">Markanızı Bir Üst Seviyeye Taşıyoruz</h1>
+                <p class="text-lg mb-8">Yaratıcı reklam çözümleri ile işletmenizin büyümesine katkı sağlıyoruz. Dijital
+                    dünyada öne çıkmanız için buradayız.</p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#fiyatlandirma"
+                        class="md:w-full bg-white text-cyan-800 font-medium py-3 px-6 rounded-lg text-center hover:bg-gray-100 transition">Fiyatlandırma</a>
+                    <a href="#iletisim"
+                        class="md:w-full bg-transparent border-2 border-white text-white font-medium py-3 px-6 rounded-lg text-center hover:bg-white hover:text-cyan-800 transition">Bize
+                        Ulaşın</a>
+                </div>
+            </div>
+            <div class="w-full h-auto md:w-1/2">
+                <div class="max-w-6xl mx-5">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-48 mt-16">
+                        <!-- Kart 1 -->
+                        <div
+                            class="bg-white/10 backdrop-blur-lg rounded-xl p-6 text-center hover:bg-white/20 transition-all duration-300 transform hover:scale-105 animate-fade-in-up shadow-lg border border-white/20">
+                            <div
+                                class="bg-gradient-to-r from-purple-500 to-pink-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="text-4xl font-bold text-white mb-2 animate-count-up counter" data-target="10">0
+                            </div>
+                            <div class="text-lg text-white/90 font-medium">Aktif Grup</div>
+                            <div class="text-sm text-white/70 mt-1">Toplam Grup Sayısı</div>
+                        </div>
+
+                        <!-- Kart 2 -->
+                        <div class="bg-white/10 backdrop-blur-lg rounded-xl p-6 text-center hover:bg-white/20 transition-all duration-300 transform hover:scale-105 animate-scale-in shadow-lg border border-white/20"
+                            style="animation-delay: 0.2s;">
+                            <div
+                                class="bg-gradient-to-r from-green-500 to-teal-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="text-4xl font-bold text-white mb-2 animate-count-up counter" data-target="2000">
+                            </div>
+                            <div class="text-lg text-white/90 font-medium">Toplam Üye</div>
+                            <div class="text-sm text-white/70 mt-1">Aktif Üye Sayısı</div>
+                        </div>
+
+                        <!-- Kart 3 -->
+                        <div class="bg-white/10 backdrop-blur-lg rounded-xl p-6 text-center hover:bg-white/20 transition-all duration-300 transform hover:scale-105 animate-bounce-in shadow-lg border border-white/20"
+                            style="animation-delay: 0.4s;">
+                            <div
+                                class="bg-gradient-to-r from-orange-500 to-red-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="text-4xl font-bold text-white mb-2 animate-count-up counter"
+                                data-target="10000">+</div>
+                            <div class="text-lg text-white/90 font-medium">Erişilen Hesap</div>
+                            <div class="text-sm text-white/70 mt-1">Toplam Erişim</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="hizmetler" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Hizmetlerimiz</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Markanızın ihtiyaçlarına özel çözümler sunuyoruz. Dijital
+                    dünyada rekabet avantajı sağlamak için gereken tüm hizmetleri tek çatı altında topluyoruz.</p>
+            </div>
+
+            <div class="grid grid-cols-6 md:grid-cols-6 lg:grid-cols-11 gap-8">
+                <!-- Service 1 -->
+                <div
+                    class="bg-gray-50 rounded-xl p-6 shadow-md col-start-2 col-span-4 lg:col-start-2 lg:col-span-3 hover:shadow-lg transition">
+                    <div class="bg-indigo-100 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                            <path fill-rule="evenodd"
+                                d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Dijital Reklam Yönetimi</h3>
+                    <p class="text-gray-600 mb-4">Google Ads, Facebook, Instagram ve diğer platformlarda etkili reklam
+                        kampanyaları oluşturuyor ve yönetiyoruz.</p>
+                    <ul class="text-gray-600 space-y-2">
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Hedef kitle analizi
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Reklam metni optimizasyonu
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Performans raporlama
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Service 2 -->
+                <div
+                    class="bg-gray-50 rounded-xl p-6 shadow-md col-start-2 col-span-4 lg:col-start-5 lg:col-span-3 hover:shadow-lg transition">
+                    <div class="bg-indigo-100 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Kreatif Tasarım</h3>
+                    <p class="text-gray-600 mb-4">Markanızı yansıtan, dikkat çekici ve etkileyici görsel içerikler
+                        tasarlıyoruz.</p>
+                    <ul class="text-gray-600 space-y-2">
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Banner ve görseller
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Video içerikler
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Sosyal medya içerikleri
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Service 3 -->
+                <div
+                    class="bg-gray-50 rounded-xl p-6 shadow-md col-start-2 col-span-4 lg:col-start-8 lg:col-span-3 hover:shadow-lg transition">
+                    <div class="bg-indigo-100 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+                            <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Analiz ve Raporlama</h3>
+                    <p class="text-gray-600 mb-4">Kampanyalarınızın performansını detaylı olarak analiz ediyor ve
+                        raporluyoruz.</p>
+                    <ul class="text-gray-600 space-y-2">
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Haftalık/aylık raporlar
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            ROI hesaplamaları
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            İyileştirme önerileri
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="fiyatlandirma" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Fiyatlandırma Politikamız</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Her bütçeye uygun, şeffaf ve esnek fiyatlandırma seçenekleri
+                    sunuyoruz. İşletmenizin ihtiyaçlarına göre özelleştirilebilir paketlerimiz mevcuttur.</p>
+            </div>
+
+            <div class="grid grid-cols-8 gap-8 lg:grid-cols-11">
+                <!-- Basic Plan -->
+                <div
+                    class="pricing-card bg-white rounded-xl shadow-md p-8 border-t-4 border-indigo-400 transition duration-300 col-start-2 col-span-6 lg:col-start-2 lg:col-span-3 gap-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Başlangıç Paketi</h3>
+                    <div class="mb-6">
+                        <span class="text-4xl font-bold text-gray-800">₺2.500</span>
+                        <span class="text-gray-500">/aylık</span>
+                    </div>
+                    <p class="text-gray-600 mb-6">Küçük işletmeler ve yeni başlayanlar için ideal paket.</p>
+                    <ul class="mb-8 space-y-3">
+                        <li class="flex items-center text-gray-600">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            2 sosyal medya platformu
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Haftalık 5 içerik
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Aylık performans raporu
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Temel SEO desteği
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <svg class="w-5 h-5 text-gray-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Video içerik üretimi
+                        </li>
+                    </ul>
+                    <a href="#iletisim"
+                        class="block text-center bg-indigo-600 text-white py-3 px-6 rounded-lg hover:bg-indigo-700 transition">Hemen
+                        Başlayın</a>
+                </div>
+
+                <!-- Standard Plan -->
+                <div
+                    class="pricing-card bg-white rounded-xl shadow-lg p-8 border-t-4 border-indigo-600 transform scale-105 z-10 transition duration-300 col-start-2 col-span-6 lg:col-start-5 lg:col-span-3">
+                    <div
+                        class="absolute top-0 right-0 bg-indigo-600 text-white text-xs font-semibold px-3 py-1 rounded-bl-lg rounded-tr-lg">
+                        EN POPÜLER</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Standart Paket</h3>
+                    <div class="mb-6">
+                        <span class="text-4xl font-bold text-gray-800">₺5.000</span>
+                        <span class="text-gray-500">/aylık</span>
+                    </div>
+                    <p class="text-gray-600 mb-6">Büyüyen işletmeler için kapsamlı çözümler.</p>
+                    <ul class="mb-8 space-y-3">
+                        <li class="flex items-center text-gray-600">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            4 sosyal medya platformu
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Haftalık 10 içerik
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Haftalık performans raporu
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Kapsamlı SEO desteği
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Aylık 2 video içerik
+                        </li>
+                    </ul>
+                    <a href="#iletisim"
+                        class="block text-center bg-indigo-600 text-white py-3 px-6 rounded-lg hover:bg-indigo-700 transition">Hemen
+                        Başlayın</a>
+                </div>
+
+                <!-- Premium Plan -->
+                <div
+                    class="pricing-card bg-white rounded-xl shadow-md p-8 border-t-4 border-indigo-400 transition duration-300 col-start-2 col-span-6 lg:col-start-8 lg:col-span-3 gap-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Premium Paket</h3>
+                    <div class="mb-6">
+                        <span class="text-4xl font-bold text-gray-800">₺9.500</span>
+                        <span class="text-gray-500">/aylık</span>
+                    </div>
+                    <p class="text-gray-600 mb-6">Kurumsal firmalar için tam kapsamlı çözümler.</p>
+                    <ul class="mb-8 space-y-3">
+                        <li class="flex items-center text-gray-600">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Tüm sosyal medya platformları
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Günlük içerik üretimi
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Gerçek zamanlı raporlama
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            İleri düzey SEO ve SEM
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Haftalık video içerik
+                        </li>
+                    </ul>
+                    <a href="#iletisim"
+                        class="block text-center bg-indigo-600 text-white py-3 px-6 rounded-lg hover:bg-indigo-700 transition">Hemen
+                        Başlayın</a>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                <p class="text-gray-600 mb-4">Özel ihtiyaçlarınız için size özel çözümler sunabiliriz.</p>
+                <a href="#iletisim"
+                    class="inline-block bg-indigo-100 text-indigo-700 font-medium py-3 px-6 rounded-lg hover:bg-indigo-200 transition">Özel
+                    Teklif Alın</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="ekibimiz" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Uzman Ekibimiz</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Alanında uzman, deneyimli ve yaratıcı ekibimizle markanızı
+                    bir üst seviyeye taşıyoruz.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 grid-center">
+                <!-- Team Member 1 -->
+                <div
+                    class="team-card col-start-2 bg-gradient-to-t from-slate-200 to-blue-500 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition">
+                    <div class="h-64 overflow-hidden">
+                        <img src="husellik.jpg" alt="*"
+                            class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl text-bold text-shadow-sky-300 font-semibold text-black-800 mb-1">Zeynep Kaya
+                        </h3>
+                        <p class="text-black-600 italic mb-3">Dijital Pazarlama Uzmanı</p>
+                        <p class="text-black-400 mb-4">Veri odaklı stratejilerle kampanyalarınızı optimize ediyor.</p>
+                        <div class="flex space-x-3">
+                            <a href="#" class="text-gray-500 hover:text-indigo-600">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z" />
+                                </svg>
+                            </a>
+                            <a href="#" class="text-gray-500 hover:text-indigo-600">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Team Member 2 -->
+                <div
+                    class="team-card col-start-3 bg-gradient-to-t from-slate-200 to-blue-500 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition">
+                    <div class="h-64 overflow-hidden">
+                        <img src="husellik.jpg" alt="*"
+                            class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-1">Mehmet Demir</h3>
+                        <p class="text-indigo-600 italic mb-3">Grafik Tasarımcı</p>
+                        <p class="text-black-600 mb-4">Etkileyici görsel içerikler ile markanızı öne çıkarıyor.</p>
+                        <div class="flex space-x-3">
+                            <a href="#" class="text-gray-500 hover:text-indigo-600">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z" />
+                                </svg>
+                            </a>
+                            <a href="#" class="text-gray-500 hover:text-indigo-600">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="sss" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Sık Sorulan Sorular</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Müşterilerimizin en çok merak ettiği soruları ve yanıtlarını
+                    burada bulabilirsiniz.</p>
+            </div>
+
+            <div class="max-w-3xl mx-auto">
+                <!-- FAQ Item 1 -->
+                <div
+                    class="faq-item bg-white rounded-lg shadow-md mb-4 overflow-hidden transition-all duration-300 hover:shadow-lg">
+                    <div class="faq-question p-6 cursor-pointer flex justify-between items-center"
+                        onclick="toggleFAQ(this)">
+                        <h3 class="text-lg font-semibold text-gray-800">Hizmetleriniz hangi sektörlere uygun?</h3>
+                        <svg class="faq-icon w-5 h-5 text-indigo-600 transition-transform duration-300" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-out">
+                        <div class="p-6 pt-0 text-gray-600 leading-relaxed">
+                            <p>Hizmetlerimiz tüm sektörlere uygun olarak tasarlanmıştır. E-ticaret, emlak, sağlık,
+                                eğitim, turizm, teknoloji ve daha birçok sektörde başarılı projeler gerçekleştirdik. Her
+                                sektörün kendine özgü ihtiyaçlarını anlayarak, özelleştirilmiş çözümler sunuyoruz.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-item bg-white rounded-lg shadow-md mb-4 overflow-hidden" onclick="toggleFAQ(this)">
+                    <div class="faq-question p-6 cursor-pointer flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-800">Minimum sözleşme süreniz nedir?</h3>
+                        <svg class="faq-icon w-5 h-5 text-indigo-600" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer bg-twhite text-gray-900">
+                        <div class="p-6 pt-0">
+                            Standart sözleşmelerimiz 6 aylık süreyi kapsamaktadır. Bu süre, stratejilerimizin etkisini
+                            görebilmeniz ve sonuçları değerlendirebilmeniz için ideal bir süredir. Ancak özel projeler
+                            için
+                            3 aylık kısa dönem çalışmalar da yapabiliyoruz. Her müşterimizin ihtiyacına göre esnek
+                            çözümler
+                            sunuyoruz.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-item bg-white rounded-lg shadow-md mb-4 overflow-hidden" onclick="toggleFAQ(this)">
+                    <div class="faq-question p-6 cursor-pointer flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-800">Reklam bütçesi paketlere dahil mi?</h3>
+                        <svg class="faq-icon w-5 h-5 text-indigo-600" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer bg-white text-gray-900">
+                        <div class="p-6 pt-0">
+                            Belirtilen fiyatlandırma paketlerimiz, reklam yönetim hizmetlerimizi kapsamaktadır. Reklam
+                            bütçeleri ayrıca belirlenir ve doğrudan reklam platformlarına ödenir. Size özel bir reklam
+                            bütçesi planı oluşturur ve bu bütçenin en verimli şekilde kullanılmasını sağlarız. Reklam
+                            harcamalarınızı şeffaf bir şekilde raporlar ve performans analizlerini paylaşırız.</div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="faq-item bg-white rounded-lg shadow-md mb-4 overflow-hidden" onclick="toggleFAQ(this)">
+                    <div class="faq-question p-6 cursor-pointer flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-800">Ne sıklıkta rapor alacağım?</h3>
+                        <svg class="faq-icon w-5 h-5 text-indigo-600" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer bg-white text-gray-900">
+                        <div class="p-6 pt-0">
+                            Paketinize bağlı olarak haftalık veya aylık detaylı raporlar sunuyoruz. Premium paketimizde
+                            gerçek zamanlı raporlama imkanı bulunmaktadır. Tüm raporlarımız, kampanyalarınızın
+                            performansını, hedef kitle etkileşimini, dönüşüm oranlarını ve ROI analizlerini içerir.
+                            Ayrıca
+                            talep etmeniz halinde özel raporlar da hazırlayabiliriz.</div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="faq-item bg-white rounded-lg shadow-md mb-4 overflow-hidden" onclick="toggleFAQ(this)">
+                    <div class="faq-question p-6 cursor-pointer flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-800">Özel paket oluşturabilir miyim?</h3>
+                        <svg class="faq-icon w-5 h-5 text-indigo-600" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer bg-white text-gray-900">
+                        <div class="p-6 pt-0">
+                            Evet, işletmenizin özel ihtiyaçlarına göre tamamen kişiselleştirilmiş paketler sunuyoruz.
+                            Standart paketlerimizde bulunmayan hizmetlere ihtiyacınız varsa veya belirli hizmetlere daha
+                            fazla ağırlık vermek istiyorsanız, size özel bir teklif hazırlayabiliriz. İletişim formumuz
+                            aracılığıyla bize ulaşarak özel paket talebinde bulunabilirsiniz.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 6 -->
+                <div class="faq-item bg-white rounded-lg shadow-md mb-4 overflow-hidden" onclick="toggleFAQ(this)">
+                    <div class="faq-question p-6 cursor-pointer flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-800">İçerik üretimi süreciniz nasıl işliyor?</h3>
+                        <svg class="faq-icon w-5 h-5 text-indigo-600" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer bg-white text-gray-900">
+                        <div class="p-6 pt-0">
+                            İçerik üretim sürecimiz, markanızı ve hedef kitlenizi derinlemesine anlamakla başlar.
+                            Öncelikle
+                            bir içerik stratejisi oluşturur, ardından aylık içerik takvimi hazırlarız. Tüm içerikler,
+                            onayınıza sunulur ve geri bildirimlerinize göre revize edilir. İçeriklerimiz, markanızın
+                            sesini
+                            yansıtacak ve hedef kitlenizle etkileşimi artıracak şekilde profesyonel ekibimiz tarafından
+                            hazırlanır.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="iletisim" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Bizimle İletişime Geçin</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Markanızı bir üst seviyeye taşımak için hemen iletişime
+                    geçin. Size özel çözümler sunalım.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="bg-gray-50 p-8 rounded-xl shadow-md">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-6">İletişim Formu</h3>
+                    <form class="space-y-4">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Adınız
+                                Soyadınız</label>
+                            <input type="text" id="name"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-posta
+                                Adresiniz</label>
+                            <input type="email" id="email"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Telefon
+                                Numaranız</label>
+                            <input type="tel" id="phone"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Mesajınız</label>
+                            <textarea id="message" rows="4"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                        </div>
+                        <div>
+                            <button type="submit"
+                                class="w-full bg-indigo-600 text-white py-3 px-6 rounded-lg hover:bg-indigo-700 transition">Gönder</button>
+                        </div>
+                        <p class="text-sm text-gray-500 text-center"></p>
+                    </form>
+                </div>
+
+                <div class="bg-gray-50 p-8 rounded-xl shadow-md">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-6">İletişim Bilgilerimiz</h3>
+                    <div class="space-y-6">
+
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-indigo-600 mt-1 mr-3" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                                </path>
+                            </svg>
+                            <div>
+                                <h4 class="font-medium text-gray-800 mb-1">Telefon</h4>
+                                <p class="text-gray-600">+90 (212) 456 78 90</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-indigo-600 mt-1 mr-3" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                            <div>
+                                <h4 class="font-medium text-gray-800 mb-1">E-posta</h4>
+                                <p class="text-gray-600">info@adcreative.com.tr</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-indigo-600 mt-1 mr-3" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <div>
+                                <h4 class="font-medium text-gray-800 mb-1">Çalışma Saatleri</h4>
+                                <p class="text-gray-600">Pazartesi - Cuma: 09:00 - 18:00<br>Cumartesi: 10:00 - 14:00</p>
+                            </div>
+                        </div>
+
+                        <div class="pt-4">
+                            <h4 class="font-medium text-gray-800 mb-3">Bizi Takip Edin</h4>
+                            <div class="flex space-x-4">
+                                <a href="#"
+                                    class="bg-indigo-100 text-indigo-600 p-2 rounded-full hover:bg-indigo-200 transition">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            d="M12 0C5.371 0 0 5.371 0 12c0 6.627 5.371 12 12 12s12-5.373 12-12c0-6.629-5.371-12-12-12zm5.629 7.229-1.734 8.175c-.131.579-.471.719-.954.45l-2.636-1.947-1.271 1.224c-.14.14-.258.258-.528.258l.189-2.678 4.875-4.408c.211-.189-.045-.294-.327-.105l-6.021 3.792-2.594-.81c-.564-.177-.576-.564.118-.834l10.143-3.912c.471-.177.885.105.733.825z" />
+                                    </svg>
+                                </a>
+                                <a href="#"
+                                    class="bg-indigo-100 text-indigo-600 p-2 rounded-full hover:bg-indigo-200 transition">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                                    </svg>
+                                </a>
+                                <a href="#"
+                                    class="bg-indigo-100 text-indigo-600 p-2 rounded-full hover:bg-indigo-200 transition">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"></svg>
+                                    <path
+                                        d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232" />
